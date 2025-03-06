@@ -1,29 +1,13 @@
 import streamlit as st
 import openai
 import os
+from langchain_openai import ChatOpenAI
 
-# Configurar API Key de OpenAI desde variables de entorno o secretos de Streamlit
-openai_api_key = os.getenv("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", st.secrets["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"])
+# Configurar API Key de OpenAI
+openai_api_key = os.getenv("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")
 if not openai_api_key:
-    st.error("Error: No se encontró la API Key de OpenAI. Asegúrate de configurarla correctamente en tu entorno o en Streamlit Secrets.")
+    st.error("Error: No se encontró la API Key de OpenAI. Asegúrate de configurarla correctamente.")
     st.stop()
-
-# Inicializar modelo de OpenAI
-openai.api_key = openai_api_key
-
-def chatbot_response(question, philosopher):
-    prompt = f"Soy {philosopher}, un filósofo de la Antigua Grecia. {philosophers[philosopher]['bio']} \nPregunta: {question}\nRespuesta:" 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=[{"role": "system", "content": f"Responde como {philosopher}, basándote en su filosofía."},
-                      {"role": "user", "content": question}],
-            max_tokens=150,
-            temperature=0.7
-        )
-        return response["choices"][0]["message"]["content"].strip()
-    except openai.error.OpenAIError as e:
-        return f"Error al generar respuesta: {str(e)}"
 
 # Datos de los filósofos
 philosophers = {
@@ -58,6 +42,33 @@ philosophers = {
         "topics": "La lógica y el silogismo, La ética y la felicidad, La política y el bien común"
     }
 }
+
+# Inicializar modelo de IA con LangChain
+try:
+    chat_model = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
+except openai.error.AuthenticationError:
+    st.error("Error de autenticación: La API Key de OpenAI no es válida. Verifica tu clave.")
+    st.stop()
+except openai.error.APIConnectionError:
+    st.error("Error de conexión: No se pudo conectar con OpenAI. Verifica tu conexión a internet.")
+    st.stop()
+
+def chatbot_response(question, philosopher):
+    prompt = f"""
+    Imagina que eres {philosopher}, un filósofo de la antigua Grecia. Responde de manera coherente con tu pensamiento,
+    sin anacronismos y evitando temas fuera de tu contexto histórico.
+    
+    **Tu filosofía se basa en los siguientes temas:** {philosophers[philosopher]['topics']}
+    
+    Pregunta: {question}
+    Respuesta:
+    """
+    
+    try:
+        response = chat_model.invoke(prompt)
+        return response
+    except openai.error.OpenAIError as e:
+        return f"Hubo un error con OpenAI: {str(e)}"
 
 # Interfaz de usuario en Streamlit
 st.title("Chatbot de Filósofos Antiguos")
