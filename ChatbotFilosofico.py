@@ -4,7 +4,7 @@ import os
 from langchain_openai import ChatOpenAI
 
 # Obtener API Key de OpenAI desde Streamlit Secrets o Variable de Entorno
-openai_api_key = st.secrets.get("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") or os.getenv("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")
+openai_api_key = st.secrets.get("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") or os.getenv("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")
 
 if not openai_api_key:
     st.error("Error: No se encontró la API Key de OpenAI. Asegúrate de configurarla en Streamlit Secrets o como variable de entorno.")
