@@ -4,7 +4,10 @@ import os
 from langchain_openai import ChatOpenAI
 
 # Configurar API Key de OpenAI desde variable de entorno
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai_api_key = os.getenv("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")
+if not openai_api_key:
+    st.error("Error: No se encontró la API Key de OpenAI. Configúrala en una variable de entorno.")
+    st.stop()
 
 # Datos de los filósofos
 philosophers = {
@@ -41,7 +44,7 @@ philosophers = {
 }
 
 # Inicializar modelo de IA con LangChain
-chat_model = ChatOpenAI(model_name="gpt-4")
+chat_model = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
 
 def chatbot_response(question, philosopher):
     prompt = f"""
@@ -54,7 +57,7 @@ def chatbot_response(question, philosopher):
     Respuesta:
     """
     
-    response = chat_model.predict(prompt)
+    response = chat_model.invoke(prompt)
     return response
 
 # Interfaz de usuario en Streamlit
