@@ -2,7 +2,7 @@ import streamlit as st
 import torch
 from transformers import pipeline
 
-# Cargar el modelo GPT-2
+# Cargar el modelo GPT-2 con manejo de caché en Streamlit
 @st.cache_resource()
 def load_model():
     return pipeline("text-generation", model="gpt2", tokenizer="gpt2")
@@ -43,11 +43,14 @@ philosophers = {
     }
 }
 
-# Función para responder con GPT-2
+# Función para responder con GPT-2 con manejo de errores
 def chatbot_response(question, philosopher):
     prompt = f"Soy {philosopher}, un filósofo de la Antigua Grecia. {philosophers[philosopher]['bio']} \nPregunta: {question}\nRespuesta:" 
-    response = model(prompt, max_length=100, num_return_sequences=1, truncation=True)[0]['generated_text']
-    return response[len(prompt):]  # Quitar la parte del prompt para solo mostrar la respuesta
+    try:
+        response = model(prompt, max_length=50, min_length=20, num_return_sequences=1, truncation=True, do_sample=True, temperature=0.7)[0]['generated_text']
+        return response[len(prompt):].strip()  # Quitar la parte del prompt para solo mostrar la respuesta
+    except Exception as e:
+        return f"Error al generar respuesta: {str(e)}"
 
 # Interfaz de usuario en Streamlit
 st.title("Chatbot de Filósofos Antiguos")
