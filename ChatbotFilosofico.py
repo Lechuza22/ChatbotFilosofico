@@ -1,9 +1,13 @@
 import streamlit as st
-import openai
-from langchain_openai import ChatOpenAI
+import torch
+from transformers import pipeline
 
-# Configurar API Key de OpenAI directamente en el código (⚠️ No recomendado para producción)
-openai_api_key = "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"
+# Cargar el modelo GPT-2
+@st.cache_resource()
+def load_model():
+    return pipeline("text-generation", model="gpt2", tokenizer="gpt2")
+
+model = load_model()
 
 # Datos de los filósofos
 philosophers = {
@@ -39,22 +43,11 @@ philosophers = {
     }
 }
 
-# Inicializar modelo de IA con LangChain
-chat_model = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
-
+# Función para responder con GPT-2
 def chatbot_response(question, philosopher):
-    prompt = f"""
-    Imagina que eres {philosopher}, un filósofo de la antigua Grecia. Responde de manera coherente con tu pensamiento,
-    sin anacronismos y evitando temas fuera de tu contexto histórico.
-    
-    **Tu filosofía se basa en los siguientes temas:** {philosophers[philosopher]['topics']}
-    
-    Pregunta: {question}
-    Respuesta:
-    """
-    
-    response = chat_model.invoke(prompt)
-    return response
+    prompt = f"Soy {philosopher}, un filósofo de la Antigua Grecia. {philosophers[philosopher]['bio']} \nPregunta: {question}\nRespuesta:" 
+    response = model(prompt, max_length=100, num_return_sequences=1, truncation=True)[0]['generated_text']
+    return response[len(prompt):]  # Quitar la parte del prompt para solo mostrar la respuesta
 
 # Interfaz de usuario en Streamlit
 st.title("Chatbot de Filósofos Antiguos")
