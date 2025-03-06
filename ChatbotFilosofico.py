@@ -1,9 +1,10 @@
 import streamlit as st
 import openai
-from langchain.chat_models import ChatOpenAI
+import os
+from langchain_openai import ChatOpenAI
 
-# Configurar API Key (puedes usar variables de entorno en producción)
-openai.api_key = "sk-z0rj_Eh6PQgXaXN1NOFXVoM9r0K-90dtXjpm5WeSiDT3BlbkFJwOYTgfGAnAE4qZ-qk1dOGiB5OVCvJ9cIcUG3qbZZQA"
+# Configurar API Key de OpenAI desde variable de entorno
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Datos de los filósofos
 philosophers = {
