@@ -47,7 +47,7 @@ philosophers = {
 def chatbot_response(question, philosopher):
     prompt = f"Soy {philosopher}, un filósofo de la Antigua Grecia. {philosophers[philosopher]['bio']} \nPregunta: {question}\nRespuesta:" 
     try:
-        response = model(prompt, max_length=50, min_length=20, num_return_sequences=1, truncation=True, do_sample=True, temperature=0.7)[0]['generated_text']
+        response = model(prompt, max_new_tokens=50, num_return_sequences=1, truncation=True, do_sample=True, temperature=0.7)[0]['generated_text']
         return response[len(prompt):].strip()  # Quitar la parte del prompt para solo mostrar la respuesta
     except Exception as e:
         return f"Error al generar respuesta: {str(e)}"
