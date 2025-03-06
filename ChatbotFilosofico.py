@@ -1,13 +1,29 @@
 import streamlit as st
-import torch
-from transformers import pipeline
+import openai
+import os
 
-# Cargar el modelo GPT-2 con manejo de caché en Streamlit
-@st.cache_resource()
-def load_model():
-    return pipeline("text-generation", model="gpt2", tokenizer="gpt2")
+# Configurar API Key de OpenAI desde variables de entorno o secretos de Streamlit
+openai_api_key = os.getenv("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", st.secrets["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"])
+if not openai_api_key:
+    st.error("Error: No se encontró la API Key de OpenAI. Asegúrate de configurarla correctamente en tu entorno o en Streamlit Secrets.")
+    st.stop()
 
-model = load_model()
+# Inicializar modelo de OpenAI
+openai.api_key = openai_api_key
+
+def chatbot_response(question, philosopher):
+    prompt = f"Soy {philosopher}, un filósofo de la Antigua Grecia. {philosophers[philosopher]['bio']} \nPregunta: {question}\nRespuesta:" 
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=[{"role": "system", "content": f"Responde como {philosopher}, basándote en su filosofía."},
+                      {"role": "user", "content": question}],
+            max_tokens=150,
+            temperature=0.7
+        )
+        return response["choices"][0]["message"]["content"].strip()
+    except openai.error.OpenAIError as e:
+        return f"Error al generar respuesta: {str(e)}"
 
 # Datos de los filósofos
 philosophers = {
@@ -42,15 +58,6 @@ philosophers = {
         "topics": "La lógica y el silogismo, La ética y la felicidad, La política y el bien común"
     }
 }
-
-# Función para responder con GPT-2 con manejo de errores
-def chatbot_response(question, philosopher):
-    prompt = f"Soy {philosopher}, un filósofo de la Antigua Grecia. {philosophers[philosopher]['bio']} \nPregunta: {question}\nRespuesta:" 
-    try:
-        response = model(prompt, max_new_tokens=50, num_return_sequences=1, truncation=True, do_sample=True, temperature=0.7)[0]['generated_text']
-        return response[len(prompt):].strip()  # Quitar la parte del prompt para solo mostrar la respuesta
-    except Exception as e:
-        return f"Error al generar respuesta: {str(e)}"
 
 # Interfaz de usuario en Streamlit
 st.title("Chatbot de Filósofos Antiguos")
