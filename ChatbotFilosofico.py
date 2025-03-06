@@ -3,7 +3,7 @@ import openai
 from langchain_openai import ChatOpenAI
 
 # Configurar API Key de OpenAI directamente en el código (⚠️ No recomendado para producción)
-openai_api_key = "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 "
+openai_api_key = "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"
 
 # Datos de los filósofos
 philosophers = {
