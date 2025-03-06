@@ -3,11 +3,21 @@ import openai
 import os
 from langchain_openai import ChatOpenAI
 
-# Configurar API Key de OpenAI
-openai_api_key = st.secrets.get(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") or os.getenv("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")
+# Obtener API Key de OpenAI desde Streamlit Secrets o Variable de Entorno
+openai_api_key = st.secrets.get("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") or os.getenv("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")
 
 if not openai_api_key:
-    st.error("Error: No se encontró la API Key de OpenAI. Asegúrate de configurarla correctamente.")
+    st.error("Error: No se encontró la API Key de OpenAI. Asegúrate de configurarla en Streamlit Secrets o como variable de entorno.")
+    st.stop()
+
+# Inicializar modelo de IA con LangChain
+try:
+    chat_model = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
+except openai.error.AuthenticationError:
+    st.error("Error de autenticación: La API Key de OpenAI no es válida. Verifica tu clave en Streamlit Secrets.")
+    st.stop()
+except openai.error.APIConnectionError:
+    st.error("Error de conexión: No se pudo conectar con OpenAI. Verifica tu conexión a internet.")
     st.stop()
 
 # Datos de los filósofos
