@@ -1,99 +1,92 @@
 import streamlit as st
 import openai
+import pandas as pd
+import plotly.express as px
 import os
-from langchain_openai import ChatOpenAI
 
-# Obtener API Key de OpenAI desde Streamlit Secrets o Variable de Entorno
-openai_api_key = st.secrets.get("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") or os.getenv("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")
+# Configuración de la API de OpenAI
+openai.api_key = "TU_API_KEY"
 
-if not openai_api_key:
-    st.error("Error: No se encontró la API Key de OpenAI. Asegúrate de configurarla en Streamlit Secrets o como variable de entorno.")
-    st.stop()
+def obtener_respuesta(mensaje):
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[{"role": "user", "content": mensaje}]
+    )
+    return response["choices"][0]["message"]["content"]
 
-# Inicializar modelo de IA con LangChain
-try:
-    chat_model = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
-except openai.error.AuthenticationError:
-    st.error("Error de autenticación: La API Key de OpenAI no es válida. Verifica tu clave en Streamlit Secrets.")
-    st.stop()
-except openai.error.APIConnectionError:
-    st.error("Error de conexión: No se pudo conectar con OpenAI. Verifica tu conexión a internet.")
-    st.stop()
+# Configuración de la aplicación Streamlit
+st.set_page_config(page_title="Chat Filosófico", layout="wide")
+st.title("Chat Filosófico")
 
-# Datos de los filósofos
-philosophers = {
-    "Tales de Mileto": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/6/65/Thales_of_Miletus.jpg",
-        "bio": "Tales de Mileto fue un filósofo presocrático considerado uno de los Siete Sabios de Grecia. Es conocido por su teoría de que el agua es el principio de todas las cosas.",
-        "topics": "El principio del agua, Matemáticas y geometría, Astronomía primitiva"
-    },
-    "Parménides": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Parmenides.jpg",
-        "bio": "Parménides de Elea fue un filósofo presocrático que sostuvo que el ser es uno, eterno e inmutable. Su obra más conocida es un poema filosófico llamado 'Sobre la naturaleza'.",
-        "topics": "El ser y la inmovilidad, La lógica y la razón, La ilusión del cambio"
-    },
-    "Pitágoras": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Pythagoras_in_the_Roman_Forum%2C_Cologne.jpg/330px-Pythagoras_in_the_Roman_Forum%2C_Cologne.jpg",
-        "bio": "Pitágoras fue un filósofo y matemático griego que fundó una escuela donde la matemática y la filosofía estaban estrechamente relacionadas. Es famoso por el teorema que lleva su nombre.",
-        "topics": "Números y realidad, La armonía del cosmos, El alma y la reencarnación"
-    },
-    "Sócrates": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/7/76/Socrates_Louvre.jpg",
-        "bio": "Sócrates fue un filósofo griego conocido por su método dialéctico y por no haber dejado escritos propios. Su pensamiento fue transmitido por Platón y Jenofonte.",
-        "topics": "El conocimiento de sí mismo, La ética y la virtud, La mayéutica"
-    },
-    "Platón": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Plato_Silanion_Musei_Capitolini_MC1377.jpg",
-        "bio": "Platón fue un discípulo de Sócrates y maestro de Aristóteles. Fundó la Academia y desarrolló la teoría de las Ideas, que influenció profundamente la filosofía occidental.",
-        "topics": "El mundo de las Ideas, La justicia y la República, El conocimiento y la educación"
-    },
-    "Aristóteles": {
-        "image": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Aristotle_Altemps_Inv8575.jpg",
-        "bio": "Aristóteles fue un filósofo y científico de la Antigua Grecia. Fue discípulo de Platón y tutor de Alejandro Magno. Fundó el Liceo y desarrolló la lógica y la metafísica.",
-        "topics": "La lógica y el silogismo, La ética y la felicidad, La política y el bien común"
+# Menú de opciones
+menu = st.sidebar.radio("Menú", ["Chatbot", "Filósofos Antiguos", "Línea Temporal"])
+
+if menu == "Chatbot":
+    st.header("Chatbot Filosófico")
+    mensaje_usuario = st.text_input("Escribe tu pregunta filosófica:")
+    if st.button("Enviar"):
+        if mensaje_usuario:
+            respuesta = obtener_respuesta(mensaje_usuario)
+            st.write("**Chatbot:**", respuesta)
+        else:
+            st.warning("Por favor, escribe una pregunta.")
+
+elif menu == "Filósofos Antiguos":
+    st.header("Filósofos de la Antigüedad")
+    
+    filosofos = {
+        "Tales de Mileto": {"Biografía": "Filósofo presocrático considerado el primero de los filósofos griegos...", "Obras": "No dejó textos escritos", "Ideas": "El agua como principio fundamental de todas las cosas."},
+        "Anaximandro": {"Biografía": "Discípulo de Tales, desarrolló la idea del apeiron...", "Obras": "Fragmentos recopilados", "Ideas": "El apeiron como principio de todo."},
+        "Anaxágoras": {"Biografía": "Filósofo presocrático que introdujo la noción de Nous...", "Obras": "Sobre la naturaleza", "Ideas": "El Nous (mente) como principio ordenador del cosmos."},
+        "Parménides": {"Biografía": "Filósofo eleático que desarrolló la idea del ser inmutable...", "Obras": "Poema sobre la naturaleza", "Ideas": "El ser es y el no-ser no es."},
+        "Heráclito": {"Biografía": "Filósofo de Éfeso que postuló la doctrina del cambio...", "Obras": "Fragmentos recopilados", "Ideas": "Todo fluye, el cambio es la única constante."},
+        "Pitágoras": {"Biografía": "Filósofo y matemático griego...", "Obras": "No dejó textos escritos", "Ideas": "El número como principio fundamental del universo."},
+        "Galeno": {"Biografía": "Médico y filósofo romano...", "Obras": "Sobre los temperamentos", "Ideas": "Influencia de los humores en la salud."},
+        "Sócrates": {"Biografía": "Filósofo ateniense, maestro de Platón...", "Obras": "No dejó escritos, su pensamiento fue registrado por Platón", "Ideas": "Conócete a ti mismo, la mayéutica."},
+        "Platón": {"Biografía": "Discípulo de Sócrates y maestro de Aristóteles...", "Obras": "La República, El Banquete", "Ideas": "Teoría de las Ideas, el mundo sensible y el inteligible."},
+        "Aristóteles": {"Biografía": "Discípulo de Platón y maestro de Alejandro Magno...", "Obras": "Ética a Nicómaco, Metafísica", "Ideas": "La sustancia, la lógica, la ética de la virtud."},
+        "Plotino": {"Biografía": "Fundador del neoplatonismo...", "Obras": "Las Enéadas", "Ideas": "Emanación del Uno, jerarquía del ser."},
+        "Diógenes": {"Biografía": "Filósofo cínico, discípulo de Antístenes...", "Obras": "No dejó textos escritos", "Ideas": "El desprecio por las convenciones sociales, la autosuficiencia."},
+        "Epicuro": {"Biografía": "Filósofo griego, fundador del epicureísmo...", "Obras": "Carta a Meneceo", "Ideas": "Búsqueda del placer moderado, la ausencia de dolor como felicidad."}
     }
-}
-
-# Inicializar modelo de IA con LangChain
-try:
-    chat_model = ChatOpenAI(model="gpt-4", openai_api_key=openai_api_key)
-except openai.error.AuthenticationError:
-    st.error("Error de autenticación: La API Key de OpenAI no es válida. Verifica tu clave.")
-    st.stop()
-except openai.error.APIConnectionError:
-    st.error("Error de conexión: No se pudo conectar con OpenAI. Verifica tu conexión a internet.")
-    st.stop()
-
-def chatbot_response(question, philosopher):
-    prompt = f"""
-    Imagina que eres {philosopher}, un filósofo de la antigua Grecia. Responde de manera coherente con tu pensamiento,
-    sin anacronismos y evitando temas fuera de tu contexto histórico.
     
-    **Tu filosofía se basa en los siguientes temas:** {philosophers[philosopher]['topics']}
+    seleccion = st.selectbox("Selecciona un filósofo", list(filosofos.keys()))
     
-    Pregunta: {question}
-    Respuesta:
-    """
+    if seleccion:
+        imagen_path = os.path.join("imagenes", f"{seleccion}.jpg")
+        if os.path.exists(imagen_path):
+            st.image(imagen_path, caption=seleccion, use_column_width=True)
+        
+        st.subheader("Biografía")
+        st.write(filosofos[seleccion]["Biografía"])
+        
+        st.subheader("Obras Principales")
+        st.write(filosofos[seleccion]["Obras"])
+        
+        st.subheader("Principales Ideas")
+        st.write(filosofos[seleccion]["Ideas"])
+
+elif menu == "Línea Temporal":
+    st.header("Línea Temporal de la Filosofía")
     
-    try:
-        response = chat_model.invoke(prompt)
-        return response
-    except openai.error.OpenAIError as e:
-        return f"Hubo un error con OpenAI: {str(e)}"
-
-# Interfaz de usuario en Streamlit
-st.title("Chatbot de Filósofos Antiguos")
-
-# Menú de selección de filósofos
-philosopher = st.selectbox("Elige un filósofo para conversar:", list(philosophers.keys()))
-
-# Mostrar información del filósofo seleccionado
-if philosopher:
-    st.image(philosophers[philosopher]["image"], width=200)
-    st.write(f"**{philosopher}**: {philosophers[philosopher]['bio']}")
+    datos = [
+        ("Tales de Mileto", -624),
+        ("Anaximandro", -610),
+        ("Anaxágoras", -500),
+        ("Parménides", -515),
+        ("Heráclito", -535),
+        ("Pitágoras", -570),
+        ("Sócrates", -470),
+        ("Platón", -427),
+        ("Aristóteles", -384),
+        ("Epicuro", -341),
+        ("Diógenes", -412),
+        ("Plotino", 205),
+        ("Galeno", 129)
+    ]
     
-    # Pregunta del usuario
-    user_input = st.text_input("Haz una pregunta al filósofo:")
-    if st.button("Preguntar") and user_input:
-        response = chatbot_response(user_input, philosopher)
-        st.write(f"**{philosopher}**: {response}")
+    df = pd.DataFrame(datos, columns=["Filósofo", "Año"])
+    fig = px.scatter(df, x="Año", y=[1]*len(df), text="Filósofo", size=[10]*len(df), labels={"Año": "Año"})
+    fig.update_traces(marker=dict(symbol="diamond"))
+    fig.update_layout(yaxis=dict(visible=False), xaxis_title="Año", title="Línea Temporal de la Filosofía")
+    st.plotly_chart(fig)
