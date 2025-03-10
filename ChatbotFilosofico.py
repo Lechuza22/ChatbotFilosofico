@@ -4,8 +4,8 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# Configuración de la API de OpenAI
-openai.api_key = "TU_API_KEY"
+# Configuración de la API de OpenAI desde variable de entorno
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 def obtener_respuesta(mensaje):
     response = openai.ChatCompletion.create(
@@ -86,7 +86,11 @@ elif menu == "Línea Temporal":
     ]
     
     df = pd.DataFrame(datos, columns=["Filósofo", "Año"])
-    fig = px.scatter(df, x="Año", y=[1]*len(df), text="Filósofo", size=[10]*len(df), labels={"Año": "Año"})
-    fig.update_traces(marker=dict(symbol="diamond"))
+    fig = px.scatter(
+        df, x="Año", y=[1]*len(df), text="Filósofo", size=[10]*len(df), 
+        color="Año", hover_data=["Filósofo"], size_max=15, 
+        color_continuous_scale=px.colors.sequential.Viridis,
+        title="Línea Temporal de la Filosofía"
+    )
     fig.update_layout(yaxis=dict(visible=False), xaxis_title="Año", title="Línea Temporal de la Filosofía")
     st.plotly_chart(fig)
