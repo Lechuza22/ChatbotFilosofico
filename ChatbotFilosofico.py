@@ -196,3 +196,35 @@ elif menu == "Filósofos Antiguos":
         
         st.subheader("Principales Ideas")
         st.markdown("\n".join([f"- {idea}" for idea in filosofos[seleccion]["Ideas"]]))
+
+### LINEA TEMPORAL
+
+elif menu == "Línea Temporal":
+    st.header("Línea Temporal de la Filosofía")
+    
+    datos = [
+        ("Tales de Mileto", -624),
+        ("Anaximandro", -610),
+        ("Anaxágoras", -500),
+        ("Parménides", -515),
+        ("Heráclito", -535),
+        ("Pitágoras", -570),
+        ("Sócrates", -470),
+        ("Platón", -427),
+        ("Aristóteles", -384),
+        ("Epicuro", -341),
+        ("Diógenes", -412),
+        ("Plotino", 205),
+        ("Galeno", 129)
+    ]
+    
+    df = pd.DataFrame(datos, columns=["Filósofo", "Año"])
+    
+    fig = px.scatter(
+        df, x="Año", y="Filósofo", size=[10]*len(df),
+        color="Año", text="Filósofo", hover_data=["Año"],
+        size_max=15, color_continuous_scale=px.colors.sequential.Viridis,
+        title="Línea Temporal de la Filosofía"
+    )
+    fig.update_layout(yaxis_title="Filósofo", xaxis_title="Año")
+    st.plotly_chart(fig)
