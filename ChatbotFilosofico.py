@@ -57,6 +57,40 @@ elif menu == "Filósofos Antiguos":
                 "El universo es infinito y eterno."
             ]
         },
+
+        "Anaxágoras": {
+            "Biografía": "[Anaxágoras](https://es.wikipedia.org/wiki/Anax%C3%A1goras) (500-428 a.C.) fue un filósofo presocrático que introdujo el concepto de Nous (mente) como principio ordenador del cosmos.",
+            "Obras": "Escribió *Sobre la Naturaleza*, del cual se conservan fragmentos.",
+            "Ideas": [
+                "El Nous es la inteligencia cósmica que organiza el universo.",
+                "El Sol es una masa de fuego y no un dios.",
+                "Todas las cosas contienen una porción de todo.",
+                "La Luna refleja la luz del Sol.",
+                "El universo es eterno y en constante movimiento."
+            ]
+        },
+        "Parménides": {
+            "Biografía": "[Parménides](https://es.wikipedia.org/wiki/Parm%C3%A9nides) (c. 515-450 a.C.) fue un filósofo presocrático fundador de la escuela eleática. Propuso la idea de que el ser es inmutable y eterno.",
+            "Obras": "Su única obra conocida es *Poema sobre la Naturaleza*.",
+            "Ideas": [
+                "El ser es y el no-ser no es.",
+                "El cambio y la multiplicidad son ilusiones.",
+                "El conocimiento verdadero se alcanza a través de la razón.",
+                "El universo es una unidad indivisible.",
+                "La realidad es eterna e inmutable."
+            ]
+        },
+        "Heráclito": {
+            "Biografía": "[Heráclito](https://es.wikipedia.org/wiki/Her%C3%A1clito) (c. 535-475 a.C.) fue un filósofo presocrático de Éfeso que postuló la doctrina del cambio constante.",
+            "Obras": "Su obra principal, *Sobre la Naturaleza*, se ha perdido, pero se conservan fragmentos.",
+            "Ideas": [
+                "Todo fluye y nada permanece.",
+                "El fuego es el principio fundamental del universo.",
+                "El conflicto es el motor del cambio.",
+                "La realidad está en constante transformación.",
+                "La armonía surge de la tensión de los opuestos."
+            ]
+        },
         "Pitágoras": {
             "Biografía": "[Pitágoras](https://es.wikipedia.org/wiki/Pit%C3%A1goras) (c. 570-495 a.C.) fue un filósofo y matemático griego, fundador de la escuela pitagórica, que creía en la relación entre las matemáticas y la realidad.",
             "Obras": "No dejó escritos, su pensamiento fue transmitido por sus seguidores.",
@@ -89,6 +123,39 @@ elif menu == "Filósofos Antiguos":
                 "El verdadero sabio vive en armonía con la naturaleza.",
                 "La virtud es más importante que la riqueza o el poder."
             ]
+        },
+        "Sócrates": {
+            "Biografía": "[Sócrates](https://es.wikipedia.org/wiki/S%C3%B3crates) (470-399 a.C.) fue un filósofo ateniense, considerado uno de los fundadores de la filosofía occidental. No dejó escritos, y su pensamiento fue recogido por Platón y Jenofonte.",
+            "Obras": "No dejó obras escritas, su pensamiento fue registrado en los diálogos de Platón.",
+            "Ideas": [
+                "El conocimiento es virtud.",
+                "La mayéutica: el conocimiento surge del diálogo.",
+                "Conócete a ti mismo.",
+                "La ética es fundamental para la vida humana.",
+                "Fue condenado a muerte por cuestionar las creencias de Atenas."
+            ]
+        },
+        "Platón": {
+            "Biografía": "[Platón](https://es.wikipedia.org/wiki/Plat%C3%B3n) (427-347 a.C.) fue un filósofo griego, discípulo de Sócrates y maestro de Aristóteles. Fundó la Academia de Atenas, la primera institución de educación superior de Occidente.",
+            "Obras": "Entre sus obras más importantes están *La República*, *El Banquete* y *Fedón*.",
+            "Ideas": [
+                "Teoría de las Ideas: el mundo sensible es una copia imperfecta del mundo de las Ideas.",
+                "El alma es inmortal y preexistente.",
+                "El conocimiento es reminiscencia de las Ideas.",
+                "El Estado ideal se basa en la justicia y la filosofía.",
+                "Criticó la democracia ateniense y defendió el gobierno de los sabios."
+            ]
+        },
+        "Aristóteles": {
+            "Biografía": "[Aristóteles](https://es.wikipedia.org/wiki/Arist%C3%B3teles) (384-322 a.C.) fue un filósofo griego, discípulo de Platón y maestro de Alejandro Magno. Fundó el Liceo y desarrolló un sistema filosófico que influyó profundamente en la ciencia y la lógica.",
+            "Obras": "Algunas de sus obras más importantes incluyen *Ética a Nicómaco*, *Metafísica* y *Política*.",
+            "Ideas": [
+                "La sustancia es la combinación de materia y forma.",
+                "La lógica como herramienta del conocimiento.",
+                "El ser humano es un animal político.",
+                "El conocimiento se obtiene a través de la experiencia.",
+                "La ética de la virtud se basa en el término medio."
+                  ]
         },
         "Plotino": {
             "Biografía": "[Plotino](https://es.wikipedia.org/wiki/Plotino) (205-270 d.C.) fue un filósofo neoplatónico que desarrolló una visión mística del universo basada en la emanación del Uno.",
