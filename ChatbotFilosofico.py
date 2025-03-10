@@ -57,37 +57,59 @@ elif menu == "Filósofos Antiguos":
                 "El universo es infinito y eterno."
             ]
         },
-        "Sócrates": {
-            "Biografía": "[Sócrates](https://es.wikipedia.org/wiki/S%C3%B3crates) (470-399 a.C.) fue un filósofo ateniense, considerado uno de los fundadores de la filosofía occidental. No dejó escritos, y su pensamiento fue recogido por Platón y Jenofonte.",
-            "Obras": "No dejó obras escritas, su pensamiento fue registrado en los diálogos de Platón.",
+        "Pitágoras": {
+            "Biografía": "[Pitágoras](https://es.wikipedia.org/wiki/Pit%C3%A1goras) (c. 570-495 a.C.) fue un filósofo y matemático griego, fundador de la escuela pitagórica, que creía en la relación entre las matemáticas y la realidad.",
+            "Obras": "No dejó escritos, su pensamiento fue transmitido por sus seguidores.",
             "Ideas": [
-                "El conocimiento es virtud.",
-                "La mayéutica: el conocimiento surge del diálogo.",
-                "Conócete a ti mismo.",
-                "La ética es fundamental para la vida humana.",
-                "Fue condenado a muerte por cuestionar las creencias de Atenas."
+                "Los números son la esencia de todas las cosas.",
+                "El universo sigue un orden matemático.",
+                "El alma es inmortal y transmigra.",
+                "La música tiene bases matemáticas.",
+                "La armonía rige la naturaleza."
             ]
         },
-        "Platón": {
-            "Biografía": "[Platón](https://es.wikipedia.org/wiki/Plat%C3%B3n) (427-347 a.C.) fue un filósofo griego, discípulo de Sócrates y maestro de Aristóteles. Fundó la Academia de Atenas, la primera institución de educación superior de Occidente.",
-            "Obras": "Entre sus obras más importantes están *La República*, *El Banquete* y *Fedón*.",
+        "Epicuro": {
+            "Biografía": "[Epicuro](https://es.wikipedia.org/wiki/Epicuro) (341-270 a.C.) fue un filósofo griego fundador del epicureísmo, que defendía la búsqueda del placer moderado y la ausencia de dolor como clave para la felicidad.",
+            "Obras": "Algunas de sus obras más importantes son *Carta a Meneceo* y *Máximas capitales*.",
             "Ideas": [
-                "Teoría de las Ideas: el mundo sensible es una copia imperfecta del mundo de las Ideas.",
-                "El alma es inmortal y preexistente.",
-                "El conocimiento es reminiscencia de las Ideas.",
-                "El Estado ideal se basa en la justicia y la filosofía.",
-                "Criticó la democracia ateniense y defendió el gobierno de los sabios."
+                "El placer es el bien supremo.",
+                "El miedo a los dioses es infundado.",
+                "La muerte no debe ser temida.",
+                "La amistad es esencial para la felicidad.",
+                "La tranquilidad del alma se logra evitando deseos innecesarios."
             ]
         },
-        "Aristóteles": {
-            "Biografía": "[Aristóteles](https://es.wikipedia.org/wiki/Arist%C3%B3teles) (384-322 a.C.) fue un filósofo griego, discípulo de Platón y maestro de Alejandro Magno. Fundó el Liceo y desarrolló un sistema filosófico que influyó profundamente en la ciencia y la lógica.",
-            "Obras": "Algunas de sus obras más importantes incluyen *Ética a Nicómaco*, *Metafísica* y *Política*.",
+        "Diógenes": {
+            "Biografía": "[Diógenes de Sinope](https://es.wikipedia.org/wiki/Diógenes_de_Sinope) (c. 412-323 a.C.) fue un filósofo cínico que despreciaba las convenciones sociales y promovía una vida sencilla y autosuficiente.",
+            "Obras": "No dejó escritos, sus ideas fueron transmitidas por anécdotas y relatos de sus contemporáneos.",
             "Ideas": [
-                "La sustancia es la combinación de materia y forma.",
-                "La lógica como herramienta del conocimiento.",
-                "El ser humano es un animal político.",
-                "El conocimiento se obtiene a través de la experiencia.",
-                "La ética de la virtud se basa en el término medio."
+                "El desprecio por las normas sociales.",
+                "La autosuficiencia es clave para la felicidad.",
+                "Los deseos deben ser reducidos al mínimo.",
+                "El verdadero sabio vive en armonía con la naturaleza.",
+                "La virtud es más importante que la riqueza o el poder."
+            ]
+        },
+        "Plotino": {
+            "Biografía": "[Plotino](https://es.wikipedia.org/wiki/Plotino) (205-270 d.C.) fue un filósofo neoplatónico que desarrolló una visión mística del universo basada en la emanación del Uno.",
+            "Obras": "Su obra principal es *Las Enéadas*, recopilada por su discípulo Porfirio.",
+            "Ideas": [
+                "El Uno es la fuente de todo ser.",
+                "El alma busca reunirse con el Uno.",
+                "La realidad se estructura en niveles de emanación.",
+                "La materia es la forma más baja de existencia.",
+                "La contemplación es el camino a la verdad."
+            ]
+        },
+        "Galeno": {
+            "Biografía": "[Galeno](https://es.wikipedia.org/wiki/Galeno) (129-216 d.C.) fue un médico y filósofo romano cuya obra influyó en la medicina occidental durante siglos.",
+            "Obras": "Algunas de sus obras más importantes son *Sobre los temperamentos* y *Sobre el uso de las partes del cuerpo*.",
+            "Ideas": [
+                "La teoría de los cuatro humores.",
+                "La importancia de la disección en la medicina.",
+                "La relación entre mente y cuerpo.",
+                "La dieta y el ejercicio como factores clave para la salud.",
+                "La medicina debe basarse en la observación y la experiencia."
             ]
         }
     }
