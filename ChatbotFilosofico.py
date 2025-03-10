@@ -181,21 +181,22 @@ elif menu == "Filósofos Antiguos":
         }
     }
     
+    
     seleccion = st.selectbox("Selecciona un filósofo", list(filosofos.keys()))
     
- if seleccion:
-    imagen_path = os.path.join("imagenes", f"{seleccion}.jpg")
-    if os.path.exists(imagen_path):
-        st.image(imagen_path, caption=seleccion, use_container_width=True)
-    
-    st.subheader("Biografía")
-    st.markdown(filosofos[seleccion]["Biografía"])
-    
-    st.subheader("Obras Principales")
-    st.markdown(filosofos[seleccion]["Obras"])
-    
-    st.subheader("Principales Ideas")
-    st.markdown("\n".join([f"- {idea}" for idea in filosofos[seleccion]["Ideas"]]))
+    if seleccion:
+        imagen_path = os.path.join("imagenes", f"{seleccion}.jpg")
+        if os.path.exists(imagen_path):
+            st.image(imagen_path, caption=seleccion, use_container_width=True)
+        
+        st.subheader("Biografía")
+        st.markdown(filosofos[seleccion]["Biografía"])
+        
+        st.subheader("Obras Principales")
+        st.markdown(filosofos[seleccion]["Obras"])
+        
+        st.subheader("Principales Ideas")
+        st.markdown("\n".join([f"- {idea}" for idea in filosofos[seleccion]["Ideas"]]))
 
 
 ### LINEA TEMPORAL
