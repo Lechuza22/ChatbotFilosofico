@@ -86,11 +86,12 @@ elif menu == "Línea Temporal":
     ]
     
     df = pd.DataFrame(datos, columns=["Filósofo", "Año"])
+    
     fig = px.scatter(
-        df, x="Año", y=[1]*len(df), text="Filósofo", size=[10]*len(df), 
-        color="Año", hover_data=["Filósofo"], size_max=15, 
-        color_continuous_scale=px.colors.sequential.Viridis,
+        df, x="Año", y="Filósofo", size=[10]*len(df),
+        color="Año", text="Filósofo", hover_data=["Año"],
+        size_max=15, color_continuous_scale=px.colors.sequential.Viridis,
         title="Línea Temporal de la Filosofía"
     )
-    fig.update_layout(yaxis=dict(visible=False), xaxis_title="Año", title="Línea Temporal de la Filosofía")
+    fig.update_layout(yaxis_title="Filósofo", xaxis_title="Año")
     st.plotly_chart(fig)
