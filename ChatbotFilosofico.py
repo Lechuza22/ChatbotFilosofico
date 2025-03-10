@@ -35,19 +35,61 @@ elif menu == "Filósofos Antiguos":
     st.header("Filósofos de la Antigüedad")
     
     filosofos = {
-        "Tales de Mileto": {"Biografía": "Filósofo presocrático considerado el primero de los filósofos griegos...", "Obras": "No dejó textos escritos", "Ideas": "El agua como principio fundamental de todas las cosas."},
-        "Anaximandro": {"Biografía": "Discípulo de Tales, desarrolló la idea del apeiron...", "Obras": "Fragmentos recopilados", "Ideas": "El apeiron como principio de todo."},
-        "Anaxágoras": {"Biografía": "Filósofo presocrático que introdujo la noción de Nous...", "Obras": "Sobre la naturaleza", "Ideas": "El Nous (mente) como principio ordenador del cosmos."},
-        "Parménides": {"Biografía": "Filósofo eleático que desarrolló la idea del ser inmutable...", "Obras": "Poema sobre la naturaleza", "Ideas": "El ser es y el no-ser no es."},
-        "Heráclito": {"Biografía": "Filósofo de Éfeso que postuló la doctrina del cambio...", "Obras": "Fragmentos recopilados", "Ideas": "Todo fluye, el cambio es la única constante."},
-        "Pitágoras": {"Biografía": "Filósofo y matemático griego...", "Obras": "No dejó textos escritos", "Ideas": "El número como principio fundamental del universo."},
-        "Galeno": {"Biografía": "Médico y filósofo romano...", "Obras": "Sobre los temperamentos", "Ideas": "Influencia de los humores en la salud."},
-        "Sócrates": {"Biografía": "Filósofo ateniense, maestro de Platón...", "Obras": "No dejó escritos, su pensamiento fue registrado por Platón", "Ideas": "Conócete a ti mismo, la mayéutica."},
-        "Platón": {"Biografía": "Discípulo de Sócrates y maestro de Aristóteles...", "Obras": "La República, El Banquete", "Ideas": "Teoría de las Ideas, el mundo sensible y el inteligible."},
-        "Aristóteles": {"Biografía": "Discípulo de Platón y maestro de Alejandro Magno...", "Obras": "Ética a Nicómaco, Metafísica", "Ideas": "La sustancia, la lógica, la ética de la virtud."},
-        "Plotino": {"Biografía": "Fundador del neoplatonismo...", "Obras": "Las Enéadas", "Ideas": "Emanación del Uno, jerarquía del ser."},
-        "Diógenes": {"Biografía": "Filósofo cínico, discípulo de Antístenes...", "Obras": "No dejó textos escritos", "Ideas": "El desprecio por las convenciones sociales, la autosuficiencia."},
-        "Epicuro": {"Biografía": "Filósofo griego, fundador del epicureísmo...", "Obras": "Carta a Meneceo", "Ideas": "Búsqueda del placer moderado, la ausencia de dolor como felicidad."}
+        "Tales de Mileto": {
+            "Biografía": "[Tales de Mileto](https://es.wikipedia.org/wiki/Tales_de_Mileto) fue un filósofo presocrático griego (c. 624-546 a.C.), considerado el primer filósofo de la historia occidental y uno de los Siete Sabios de Grecia.",
+            "Obras": "No dejó textos escritos, pero sus ideas fueron transmitidas por sus discípulos.",
+            "Ideas": [
+                "El agua es el principio de todas las cosas.",
+                "La Tierra flota sobre el agua.",
+                "Todo está lleno de dioses (concepto de animismo).",
+                "La observación de la naturaleza permite conocer sus leyes.",
+                "Predijo un eclipse solar con exactitud."
+            ]
+        },
+        "Anaximandro": {
+            "Biografía": "[Anaximandro](https://es.wikipedia.org/wiki/Anaximandro) (c. 610-546 a.C.) fue un filósofo presocrático discípulo de Tales, que desarrolló la idea del 'ápeiron', un principio infinito e indeterminado como origen del universo.",
+            "Obras": "Escribió un tratado llamado 'Sobre la Naturaleza', del cual solo quedan fragmentos.",
+            "Ideas": [
+                "El ápeiron es el principio de todas las cosas.",
+                "La evolución de los seres vivos proviene del agua.",
+                "La Tierra es un cilindro suspendido en el espacio.",
+                "Las leyes naturales regulan el cosmos.",
+                "El universo es infinito y eterno."
+            ]
+        },
+        "Sócrates": {
+            "Biografía": "[Sócrates](https://es.wikipedia.org/wiki/S%C3%B3crates) (470-399 a.C.) fue un filósofo ateniense, considerado uno de los fundadores de la filosofía occidental. No dejó escritos, y su pensamiento fue recogido por Platón y Jenofonte.",
+            "Obras": "No dejó obras escritas, su pensamiento fue registrado en los diálogos de Platón.",
+            "Ideas": [
+                "El conocimiento es virtud.",
+                "La mayéutica: el conocimiento surge del diálogo.",
+                "Conócete a ti mismo.",
+                "La ética es fundamental para la vida humana.",
+                "Fue condenado a muerte por cuestionar las creencias de Atenas."
+            ]
+        },
+        "Platón": {
+            "Biografía": "[Platón](https://es.wikipedia.org/wiki/Plat%C3%B3n) (427-347 a.C.) fue un filósofo griego, discípulo de Sócrates y maestro de Aristóteles. Fundó la Academia de Atenas, la primera institución de educación superior de Occidente.",
+            "Obras": "Entre sus obras más importantes están *La República*, *El Banquete* y *Fedón*.",
+            "Ideas": [
+                "Teoría de las Ideas: el mundo sensible es una copia imperfecta del mundo de las Ideas.",
+                "El alma es inmortal y preexistente.",
+                "El conocimiento es reminiscencia de las Ideas.",
+                "El Estado ideal se basa en la justicia y la filosofía.",
+                "Criticó la democracia ateniense y defendió el gobierno de los sabios."
+            ]
+        },
+        "Aristóteles": {
+            "Biografía": "[Aristóteles](https://es.wikipedia.org/wiki/Arist%C3%B3teles) (384-322 a.C.) fue un filósofo griego, discípulo de Platón y maestro de Alejandro Magno. Fundó el Liceo y desarrolló un sistema filosófico que influyó profundamente en la ciencia y la lógica.",
+            "Obras": "Algunas de sus obras más importantes incluyen *Ética a Nicómaco*, *Metafísica* y *Política*.",
+            "Ideas": [
+                "La sustancia es la combinación de materia y forma.",
+                "La lógica como herramienta del conocimiento.",
+                "El ser humano es un animal político.",
+                "El conocimiento se obtiene a través de la experiencia.",
+                "La ética de la virtud se basa en el término medio."
+            ]
+        }
     }
     
     seleccion = st.selectbox("Selecciona un filósofo", list(filosofos.keys()))
@@ -58,40 +100,10 @@ elif menu == "Filósofos Antiguos":
             st.image(imagen_path, caption=seleccion, use_column_width=True)
         
         st.subheader("Biografía")
-        st.write(filosofos[seleccion]["Biografía"])
+        st.markdown(filosofos[seleccion]["Biografía"])
         
         st.subheader("Obras Principales")
-        st.write(filosofos[seleccion]["Obras"])
+        st.markdown(filosofos[seleccion]["Obras"])
         
         st.subheader("Principales Ideas")
-        st.write(filosofos[seleccion]["Ideas"])
-
-elif menu == "Línea Temporal":
-    st.header("Línea Temporal de la Filosofía")
-    
-    datos = [
-        ("Tales de Mileto", -624),
-        ("Anaximandro", -610),
-        ("Anaxágoras", -500),
-        ("Parménides", -515),
-        ("Heráclito", -535),
-        ("Pitágoras", -570),
-        ("Sócrates", -470),
-        ("Platón", -427),
-        ("Aristóteles", -384),
-        ("Epicuro", -341),
-        ("Diógenes", -412),
-        ("Plotino", 205),
-        ("Galeno", 129)
-    ]
-    
-    df = pd.DataFrame(datos, columns=["Filósofo", "Año"])
-    
-    fig = px.scatter(
-        df, x="Año", y="Filósofo", size=[10]*len(df),
-        color="Año", text="Filósofo", hover_data=["Año"],
-        size_max=15, color_continuous_scale=px.colors.sequential.Viridis,
-        title="Línea Temporal de la Filosofía"
-    )
-    fig.update_layout(yaxis_title="Filósofo", xaxis_title="Año")
-    st.plotly_chart(fig)
+        st.markdown("\n".join([f"- {idea}" for idea in filosofos[seleccion]["Ideas"]]))
