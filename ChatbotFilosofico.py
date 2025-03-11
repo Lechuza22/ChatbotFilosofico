@@ -4,9 +4,6 @@ import pandas as pd
 import plotly.express as px
 import os
 
-import streamlit as st
-import openai
-
 # Verificar si la clave API está en los secretos de Streamlit
 if "OPENAI_API_KEY" not in st.secrets:
     st.error("⚠️ No se encontró la API Key en los secretos de Streamlit. Configúrala en 'Settings' > 'Secrets'.")
