@@ -4,15 +4,25 @@ import pandas as pd
 import plotly.express as px
 import os
 
-# Configuración de la API de OpenAI desde variable de entorno
-openai.api_key = os.getenv("OPENAI_API_KEY")
+import streamlit as st
+import openai
 
-def obtener_respuesta(mensaje):
-    response = openai.ChatCompletion.create(
-        model="gpt-4",
-        messages=[{"role": "user", "content": mensaje}]
-    )
-    return response["choices"][0]["message"]["content"]
+# Verificar si la clave API está en los secretos de Streamlit
+if "OPENAI_API_KEY" not in st.secrets:
+    st.error("⚠️ No se encontró la API Key en los secretos de Streamlit. Configúrala en 'Settings' > 'Secrets'.")
+else:
+    openai.api_key = st.secrets["OPENAI_API_KEY"]
+
+# Función para obtener respuesta del chatbot
+def obtener_respuesta(mensaje, historial):
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=historial + [{"role": "user", "content": mensaje}]
+        )
+        return response["choices"][0]["message"]["content"]
+    except openai.error.OpenAIError as e:
+        return f"⚠️ Error en la API de OpenAI: {e}"
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Chat Filosófico", layout="wide")
@@ -23,13 +33,36 @@ menu = st.sidebar.radio("Menú", ["Chatbot", "Filósofos Antiguos", "Línea Temp
 
 if menu == "Chatbot":
     st.header("Chatbot Filosófico")
+
+    # Inicializar el historial en la sesión de Streamlit
+    if "historial" not in st.session_state:
+        st.session_state.historial = [{"role": "system", "content": "Eres un asistente experto en filosofía."}]
+
+    # Entrada del usuario
     mensaje_usuario = st.text_input("Escribe tu pregunta filosófica:")
+
     if st.button("Enviar"):
         if mensaje_usuario:
-            respuesta = obtener_respuesta(mensaje_usuario)
+            # Obtener la respuesta del chatbot
+            respuesta = obtener_respuesta(mensaje_usuario, st.session_state.historial)
+
+            # Agregar la conversación al historial
+            st.session_state.historial.append({"role": "user", "content": mensaje_usuario})
+            st.session_state.historial.append({"role": "assistant", "content": respuesta})
+
+            # Mostrar la respuesta
             st.write("**Chatbot:**", respuesta)
         else:
             st.warning("Por favor, escribe una pregunta.")
+
+    # Mostrar historial de conversación
+    st.subheader("Historial de Conversación")
+    for mensaje in st.session_state.historial:
+        if mensaje["role"] == "user":
+            st.write(f"🧑 **Tú:** {mensaje['content']}")
+        elif mensaje["role"] == "assistant":
+            st.write(f"🤖 **Chatbot:** {mensaje['content']}")
+
 
 elif menu == "Filósofos Antiguos":
     st.header("Filósofos de la Antigüedad")
