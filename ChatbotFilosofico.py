@@ -64,6 +64,7 @@ if menu == "Chatbot":
             st.write(f"🤖 **Chatbot:** {mensaje['content']}")
 
 
+
 elif menu == "Filósofos Antiguos":
     st.header("Filósofos de la Antigüedad")
     
