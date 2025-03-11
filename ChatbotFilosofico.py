@@ -5,12 +5,13 @@ import plotly.express as px
 import os
 
 # Verificar si la clave API está en los secretos de Streamlit
-if "OPENAI_API_KEY" not in st.secrets:
-    st.error("⚠️ No se encontró la API Key en los secretos de Streamlit. Configúrala en 'Settings' > 'Secrets'.")
-else:
+if "OPENAI_API_KEY" in st.secrets:
     openai.api_key = st.secrets["OPENAI_API_KEY"]
+else:
+    st.error("⚠️ No se encontró la API Key en los secretos de Streamlit. Configúrala en 'Settings' > 'Secrets'.")
+    st.stop()  # Detiene la ejecución si no hay clave
 
-# Función para obtener respuesta del chatbot
+# Función mejorada para obtener la respuesta del chatbot con mejor manejo de errores
 def obtener_respuesta(mensaje, historial):
     try:
         response = openai.ChatCompletion.create(
@@ -18,8 +19,15 @@ def obtener_respuesta(mensaje, historial):
             messages=historial + [{"role": "user", "content": mensaje}]
         )
         return response["choices"][0]["message"]["content"]
+    
+    except openai.error.AuthenticationError:
+        return "⚠️ Error de autenticación: La API Key no es válida. Verifica la configuración en Streamlit Secrets."
+    
+    except openai.error.RateLimitError:
+        return "⚠️ Has alcanzado el límite de peticiones a OpenAI. Intenta de nuevo más tarde."
+    
     except openai.error.OpenAIError as e:
-        return f"⚠️ Error en la API de OpenAI: {e}"
+        return f"⚠️ Error desconocido con OpenAI: {e}"
 
 # Configuración de la aplicación Streamlit
 st.set_page_config(page_title="Chat Filosófico", layout="wide")
@@ -59,9 +67,6 @@ if menu == "Chatbot":
             st.write(f"🧑 **Tú:** {mensaje['content']}")
         elif mensaje["role"] == "assistant":
             st.write(f"🤖 **Chatbot:** {mensaje['content']}")
-
-
-
 elif menu == "Filósofos Antiguos":
     st.header("Filósofos de la Antigüedad")
     
