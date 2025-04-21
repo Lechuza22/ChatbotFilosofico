@@ -4,37 +4,37 @@ from langchain.chains import RetrievalQA
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
 
-# ------------------------------
-# CONFIGURACIÓN DE LA APP
-# ------------------------------
-st.set_page_config(page_title="📚 Chatbot Filosófico", page_icon="🧠")
-st.title("📚 Chatbot sobre Historia de la Filosofía – Reale & Antiseri")
-st.markdown("Consultá el contenido de los tres tomos del manual de Reale con ayuda de IA 🤖")
+# 1. Carga de datos
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+loader = TextLoader("manual_completo_reale.txt")
+docs = loader.load()
 
-# ------------------------------
-# CARGA DEL VECTORSTORE FAISS
-# ------------------------------
-@st.cache_resource
-def cargar_vectorstore():
-    embeddings = OpenAIEmbeddings()
-    return FAISS.load_local("reale_faiss_index", embeddings, allow_dangerous_deserialization=True)
+# 2. Chunking
+splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+chunks = splitter.split_documents(docs)
 
-vectorstore = cargar_vectorstore()
-retriever = vectorstore.as_retriever(search_kwargs={"k": 4})
+# 3. Embeddings + Vector Store (FAISS)
+from langchain.vectorstores import FAISS
+from langchain.embeddings import HuggingFaceEmbeddings
+embeddings = HuggingFaceEmbeddings()
+vectorstore = FAISS.from_documents(chunks, embeddings)
 
-# ------------------------------
-# MODELO DE LENGUAJE
-# ------------------------------
-llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0.2)
-qa_chain = RetrievalQA.from_chain_type(llm=llm, retriever=retriever)
+# 4. Pregunta-respuesta
+from langchain.chains import RetrievalQA
+from langchain.chat_models import ChatOpenAI
 
-# ------------------------------
-# INTERFAZ DEL CHATBOT
-# ------------------------------
-pregunta = st.text_input("💬 Hacé tu pregunta sobre los pensadores del manual:")
+qa_chain = RetrievalQA.from_chain_type(
+    llm=ChatOpenAI(model="gpt-3.5-turbo"),  # o GPT-4 si lo tenés habilitado
+    retriever=vectorstore.as_retriever()
+)
 
-if pregunta:
-    with st.spinner("Pensando la mejor respuesta..."):
-        respuesta = qa_chain.run(pregunta)
-        st.success("Respuesta:")
+# 5. Interfaz simple con Streamlit
+import streamlit as st
+
+st.title("🤖 RealeGPT - Filosofía Antigua")
+query = st.text_input("Preguntame algo sobre filosofía griega, platónica o medieval:")
+if query:
+    respuesta = qa_chain.run(query)
+    st.write(respuesta)
         st.markdown(respuesta)
