@@ -1,7 +1,0 @@
-numpy==1.24.4
-torch==2.1.2
-transformers==4.36.2
-sentence-transformers
-faiss-cpu
-langchain
-streamlit
