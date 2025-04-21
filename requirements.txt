@@ -1,4 +1,6 @@
 streamlit
 openai
-pandas
-plotly
+langchain
+faiss-cpu
+tiktoken
+python-dotenv
