@@ -16,6 +16,6 @@ if query:
     corpus = fragments + [query]
     vectorizer = TfidfVectorizer().fit_transform(corpus)
     sim_scores = cosine_similarity(vectorizer[-1], vectorizer[:-1])
-    top_idx = sim_scores.argsort()[0][-3:][::-1]  # top 3
+    top_idx = sim_scores.argsort()[0][-8:][::-1]  # top 3
     for idx in top_idx:
         st.markdown(f"📌 Fragmento relevante:\n\n{fragments[idx][:500]}...")
