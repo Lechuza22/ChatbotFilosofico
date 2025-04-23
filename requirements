@@ -1,15 +1,10 @@
-# Interfaz web
 streamlit
-# NLP básico
+scikit-learn
 nltk
 spacy
-# Modelo de lenguaje en español para spaCy
-es_core_news_md @ https://github.com/explosion/spacy-models/releases/download/es_core_news_md-3.7.0/es_core_news_md-3.7.0-py3-none-any.whl
-# Vectorización clásica
-scikit-learn
-# Embeddings semánticos
 sentence-transformers
-# Almacenamiento vectorial
 faiss-cpu
-# Para procesamiento de texto más avanzado (si usás LangChain)
 langchain
+
+# Modelo en español para spaCy (opcional si lo usás)
+es_core_news_md @ https://github.com/explosion/spacy-models/releases/download/es_core_news_md-3.7.0/es_core_news_md-3.7.0-py3-none-any.whl
