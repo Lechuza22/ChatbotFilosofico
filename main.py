@@ -1,21 +1,26 @@
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
+import spacy
 import streamlit as st
 
-# 1. Cargás tu texto y lo partís en párrafos o fragmentos
+# modelo en español
+nlp = spacy.load("es_core_news_md")
+
+# Dividir en párrafos
 with open("manual_completo_reale.txt", "r", encoding="utf-8") as f:
-    raw_text = f.read()
-fragments = raw_text.split("\n\n")  # podés mejorar esta separación
+    fragments = f.read().split("\n\n")
 
-# 2. Interfaz Streamlit
-st.title("🔍 Consulta Filosófica (TF-IDF)")
-query = st.text_input("¿Qué querés preguntar?")
+st.title("💬 Consulta filosófica con spaCy")
+query = st.text_input("Escribí tu pregunta")
 
-# 3. TF-IDF + Cosine
 if query:
-    corpus = fragments + [query]
-    vectorizer = TfidfVectorizer().fit_transform(corpus)
-    sim_scores = cosine_similarity(vectorizer[-1], vectorizer[:-1])
-    top_idx = sim_scores.argsort()[0][-3:][::-1]  # top 3
-    for idx in top_idx:
-        st.markdown(f"📌 Fragmento relevante:\n\n{fragments[idx][:500]}...")
+    doc_query = nlp(query)
+    results = []
+
+    for frag in fragments:
+        frag_doc = nlp(frag)
+        score = doc_query.similarity(frag_doc)
+        results.append((frag, score))
+
+    # Ordenar por mayor similitud
+    results.sort(key=lambda x: x[1], reverse=True)
+    for res, score in results[:3]:
+        st.markdown(f"📖 Fragmento (similitud {score:.2f}):\n\n{res[:400]}...")
